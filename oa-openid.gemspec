@@ -6,7 +6,7 @@ Gem::Specification.new do |gem|
   gem.summary = %Q{OpenID strategies for OmniAuth.}
   gem.description = %Q{OpenID strategies for OmniAuth.}
   gem.email = "michael@intridea.com"
-  gem.homepage = "http://github.com/intridea/omni_auth"
+  gem.homepage = "http://github.com/intridea/omniauth"
   gem.authors = ["Michael Bleigh"]
   
   gem.files = Dir.glob("{lib}/**/*") + %w(README.rdoc LICENSE.rdoc CHANGELOG.rdoc)
