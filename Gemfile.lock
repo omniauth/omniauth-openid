@@ -1,3 +1,9 @@
+GIT
+  remote: git://github.com/mbleigh/ruby-openid.git
+  revision: 4b6fdd152edbc9d1f617056879eb03bd82b78eb4
+  specs:
+    ruby-openid (2.1.8)
+
 PATH
   remote: .
   specs:
@@ -40,7 +46,6 @@ GEM
     rspec-expectations (2.7.0)
       diff-lcs (~> 1.1.2)
     rspec-mocks (2.7.0)
-    ruby-openid (2.1.8)
     simplecov (0.5.4)
       multi_json (~> 1.0.3)
       simplecov-html (~> 0.5.3)
@@ -70,6 +75,7 @@ DEPENDENCIES
   rb-fsevent
   rdiscount (~> 1.6)
   rspec (~> 2.5)
+  ruby-openid (= 2.1.8)!
   simplecov (~> 0.4)
   sinatra
   webmock (~> 1.7)

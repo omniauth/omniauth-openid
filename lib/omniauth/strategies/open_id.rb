@@ -60,22 +60,26 @@ module OmniAuth
       end
 
       def get_identifier
-        OmniAuth::Form.build(:title => 'OpenID Authentication') do |f|
-          f.label_field('OpenID Identifier', options.identifier_param)
-          f.input_field('url', options.identifier_param)
-        end.to_response
+        f = OmniAuth::Form.new(:title => 'OpenID Authentication')
+        f.label_field('OpenID Identifier', options.identifier_param)
+        f.input_field('url', options.identifier_param)
+        f.to_response
       end
 
       uid { openid_response.display_identifier }
 
       info do
-        sreg_user_info(openid_response).merge(ax_user_info(openid_response))
+        sreg_user_info.merge(ax_user_info)
       end
 
       extra do
         {'response' => openid_response}
       end
 
+      def callback_phase
+        return fail!(:invalid_credentials) unless openid_response && openid_response.status == :success
+        super
+      end
 
       def openid_response
         unless @openid_response
@@ -83,13 +87,12 @@ module OmniAuth
           openid.call(env)
           @openid_response = env.delete('rack.openid.response')
         end
-
-        fail!(:invalid_credentials) unless @openid_response && @openid_response.status == :success
         @openid_response
       end
 
-      def sreg_user_info(response)
-        sreg = ::OpenID::SReg::Response.from_success_response(response)
+      def sreg_user_info
+        raise openid_response.inspect
+        sreg = ::OpenID::SReg::Response.from_success_response(openid_response)
         return {} unless sreg
         {
           'email' => sreg['email'],
@@ -99,8 +102,8 @@ module OmniAuth
         }.reject{|k,v| v.nil? || v == ''}
       end
 
-      def ax_user_info(response)
-        ax = ::OpenID::AX::FetchResponse.from_success_response(response)
+      def ax_user_info
+        ax = ::OpenID::AX::FetchResponse.from_success_response(openid_response)
         return {} unless ax
         {
           'email' => ax.get_single(AX[:email]),
