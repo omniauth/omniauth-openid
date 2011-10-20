@@ -1,6 +1,6 @@
+require 'omniauth'
 require 'rack/openid'
-require 'omniauth/openid/gapps'
-require 'omniauth/openid'
+require 'openid/store/memory'
 
 module OmniAuth
   module Strategies
@@ -8,10 +8,6 @@ module OmniAuth
     # to a wide variety of sites, some of which are listed [on the OpenID website](http://openid.net/get-an-openid/).
     class OpenID
       include OmniAuth::Strategy
-
-      attr_accessor :options
-
-      IDENTIFIER_URL_PARAMETER = 'openid_url'
 
       AX = {
         :email => 'http://axschema.org/contact/email',
@@ -25,38 +21,25 @@ module OmniAuth
         :image => 'http://axschema.org/media/image/aspect11'
       }
 
-      # Initialize the strategy as a Rack Middleware.
-      #
-      # @param app [Rack Application] Standard Rack middleware application argument.
-      # @param store [OpenID Store] The [OpenID Store](http://github.com/openid/ruby-openid/tree/master/lib/openid/store/)
-      #   you wish to use. Defaults to OpenID::MemoryStore.
-      # @option options [Array] :required The identity fields that are required for the OpenID
-      #   request. May be an ActiveExchange schema URL or an sreg identifier.
-      # @option options [Array] :optional The optional attributes for the OpenID request. May
-      #   be ActiveExchange or sreg.
-      # @option options [Symbol, :open_id] :name The URL segment name for this provider.
-      def initialize(app, store = nil, options = {}, &block)
-        super(app, (options[:name] || :open_id), &block)
-        @options = options
-        @options[:required] ||= [AX[:email], AX[:name], AX[:first_name], AX[:last_name], 'email', 'fullname']
-        @options[:optional] ||= [AX[:nickname], AX[:city], AX[:state], AX[:website], AX[:image], 'postcode', 'nickname']
-        @store = store
-      end
-
-      protected
+      option :name, :open_id
+      option :required, [AX[:email], AX[:name], AX[:first_name], AX[:last_name], 'email', 'fullname']
+      option :optional, [AX[:nickname], AX[:city], AX[:state], AX[:website], AX[:image], 'postcode', 'nickname']
+      option :store, ::OpenID::Store::Memory.new
+      option :identifier, nil
+      option :identifier_param, 'openid_url'
 
       def dummy_app
         lambda{|env| [401, {"WWW-Authenticate" => Rack::OpenID.build_header(
           :identifier => identifier,
           :return_to => callback_url,
-          :required => @options[:required],
-          :optional => @options[:optional],
+          :required => options.required,
+          :optional => options.optional,
           :method => 'post'
         )}, []]}
       end
 
       def identifier
-        i = options[:identifier] || request[IDENTIFIER_URL_PARAMETER]
+        i = options.identifier || request.params[options.identifier_param.to_s]
         i = nil if i == ''
         i
       end
@@ -66,7 +49,7 @@ module OmniAuth
       end
 
       def start
-        openid = Rack::OpenID.new(dummy_app, @store)
+        openid = Rack::OpenID.new(dummy_app, options[:store])
         response = openid.call(env)
         case env['rack.openid.response']
         when Rack::OpenID::MissingResponse, Rack::OpenID::TimeoutResponse
@@ -77,32 +60,32 @@ module OmniAuth
       end
 
       def get_identifier
-        OmniAuth::Form.build(:title => 'OpenID Authentication') do
-          label_field('OpenID Identifier', IDENTIFIER_URL_PARAMETER)
-          input_field('url', IDENTIFIER_URL_PARAMETER)
+        OmniAuth::Form.build(:title => 'OpenID Authentication') do |f|
+          f.label_field('OpenID Identifier', options.identifier_param)
+          f.input_field('url', options.identifier_param)
         end.to_response
       end
 
-      def callback_phase
-        openid = Rack::OpenID.new(lambda{|env| [200,{},[]]}, @store)
-        openid.call(env)
-        @openid_response = env.delete('rack.openid.response')
-        if @openid_response && @openid_response.status == :success
-          super
-        else
-          fail!(:invalid_credentials)
+      uid { openid_response.display_identifier }
+
+      info do
+        sreg_user_info(openid_response).merge(ax_user_info(openid_response))
+      end
+
+      extra do
+        {'response' => openid_response}
+      end
+
+
+      def openid_response
+        unless @openid_response
+          openid = Rack::OpenID.new(lambda{|env| [200,{},[]]}, @store)
+          openid.call(env)
+          @openid_response = env.delete('rack.openid.response')
         end
-      end
 
-      def auth_hash
-        OmniAuth::Utils.deep_merge(super(), {
-          'uid' => @openid_response.display_identifier,
-          'user_info' => user_info(@openid_response)
-        })
-      end
-
-      def user_info(response)
-        sreg_user_info(response).merge(ax_user_info(response))
+        fail!(:invalid_credentials) unless @openid_response && @openid_response.status == :success
+        @openid_response
       end
 
       def sreg_user_info(response)
@@ -132,3 +115,6 @@ module OmniAuth
     end
   end
 end
+
+OmniAuth.config.add_camelization 'openid', 'OpenID'
+OmniAuth.config.add_camelization 'open_id', 'OpenID'
