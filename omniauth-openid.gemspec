@@ -3,7 +3,7 @@ require File.expand_path('../lib/omniauth-openid/version', __FILE__)
 
 Gem::Specification.new do |gem|
 
-  gem.add_dependency 'omniauth', '~> 1.0.0.beta1'
+  gem.add_dependency 'omniauth', '1.0.0.beta1'
   gem.add_dependency 'rack-openid', '~> 1.3.1'
   gem.add_development_dependency 'rack-test', '~> 0.5'
   gem.add_development_dependency 'rake', '~> 0.8'
@@ -17,7 +17,7 @@ Gem::Specification.new do |gem|
   gem.description = %q{OpenID strategy for OmniAuth.}
   gem.email = ['michael@intridea.com', 'sferik@gmail.com']
   gem.files = `git ls-files`.split("\n")
-  gem.homepage = 'http://github.com/intridea/omniauth-openid'
+  gem.homepage = 'https://github.com/intridea/omniauth-openid'
   gem.name = 'omniauth-openid'
   gem.require_paths = ['lib']
   gem.required_rubygems_version = Gem::Requirement.new('>= 1.3.6') if gem.respond_to? :required_rubygems_version=
