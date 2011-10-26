@@ -83,7 +83,7 @@ module OmniAuth
 
       def openid_response
         unless @openid_response
-          openid = Rack::OpenID.new(lambda{|env| [200,{},[]]}, @store)
+          openid = Rack::OpenID.new(lambda{|env| [200,{},[]]}, options[:store])
           openid.call(env)
           @openid_response = env.delete('rack.openid.response')
         end
@@ -91,7 +91,6 @@ module OmniAuth
       end
 
       def sreg_user_info
-        raise openid_response.inspect
         sreg = ::OpenID::SReg::Response.from_success_response(openid_response)
         return {} unless sreg
         {
