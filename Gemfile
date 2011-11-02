@@ -1,5 +1,3 @@
-require File.expand_path('../lib/omniauth/version', __FILE__)
-
 source 'http://rubygems.org'
 
 platforms :jruby do
