@@ -1,4 +1,4 @@
-require 'omniauth/openid'
+require 'omniauth/strategies/open_id'
 
 module OmniAuth
   module Strategies

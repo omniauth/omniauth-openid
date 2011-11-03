@@ -1,4 +1,5 @@
-require 'omniauth/openid'
+require 'omniauth/strategies/open_id'
+
 module OmniAuth
   module Strategies
     class Steam < OmniAuth::Strategies::OpenID
