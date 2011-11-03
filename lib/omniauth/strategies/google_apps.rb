@@ -1,11 +1,12 @@
-require 'omniauth/openid'
+require 'omniauth/strategies/open_id'
 
 module OmniAuth
   module Strategies
     class GoogleApps < OmniAuth::Strategies::OpenID
       def initialize(app, store = nil, options = {}, &block)
         options[:name] ||= 'google_apps'
-        super(app, store, options, &block)
+        options[:store] = store
+        super(app, options, &block)
       end
 
       def get_identifier

@@ -1,5 +1,5 @@
 require 'rack/openid'
-require 'omniauth/openid'
+require 'omniauth/strategies/open_id'
 require 'oauth'
 
 module OmniAuth

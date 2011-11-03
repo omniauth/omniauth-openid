@@ -1,12 +1,14 @@
-require 'omniauth/openid'
+require 'omniauth/strategies/open_id'
+
 module OmniAuth
   module Strategies
     class Steam < OmniAuth::Strategies::OpenID
-      def initialize(app, store = nil, api_key = nil, options = {}, &block)
+      def initialize(app, api_key = nil, options = {}, &block)
         options[:identifier] ||= "http://steamcommunity.com/openid"
         options[:name] ||= 'steam'
+        options[:store] = store
         @api_key = api_key
-        super(app, store, options, &block)
+        super(app, options, &block)
       end
 
       def user_info(response=nil)
