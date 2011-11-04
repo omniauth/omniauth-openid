@@ -10,7 +10,7 @@ Provides strategies for authenticating to providers using the OpenID standard.
 
 Use the strategy as a middleware in your application:
 
-    require 'omniauth/openid'
+    require 'omniauth-openid'
     require 'openid/store/filesystem'
 
     use Rack::Session::Cookie
@@ -24,7 +24,7 @@ A list of all OpenID stores is available at http://github.com/openid/ruby-openid
 
 If OpenID is one of several authentication strategies, use the OmniAuth Builder:
 
-    require 'omniauth/openid'
+    require 'omniauth-openid'
     require 'openid/store/filesystem'
 
     use OmniAuth::Builder do
