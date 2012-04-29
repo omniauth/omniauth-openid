@@ -36,7 +36,7 @@ If OpenID is one of several authentication strategies, use the OmniAuth Builder:
 You may pre-configure an OpenID identifier.  For example, to use Google's main OpenID endpoint:
 
     use OmniAuth::Builder do
-      provider :open_id, :name => 'google', :identifier => 'https://www.google.com/accounts/o8/id'
+      provider :open_id, nil, :name => 'google', :identifier => 'https://www.google.com/accounts/o8/id'
     end
 
 Note the use of nil, which will trigger ruby-openid's default Memory Store.
