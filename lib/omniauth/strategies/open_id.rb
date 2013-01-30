@@ -100,19 +100,29 @@ module OmniAuth
           'nickname' => sreg['nickname']
         }.reject{|k,v| v.nil? || v == ''}
       end
+      
+      def _add_data(d, key, val)
+        val = Array(val).first
+        return if val.nil? || v == ''
+        
+        d[key] = val
+      end
 
       def ax_user_info
         ax = ::OpenID::AX::FetchResponse.from_success_response(openid_response)
-        return {} unless ax
-        {
-          'email' => ax.get_single(AX[:email]),
-          'first_name' => ax.get_single(AX[:first_name]),
-          'last_name' => ax.get_single(AX[:last_name]),
-          'name' => (ax.get_single(AX[:name]) || [ax.get_single(AX[:first_name]), ax.get_single(AX[:last_name])].join(' ')).strip,
-          'location' => ("#{ax.get_single(AX[:city])}, #{ax.get_single(AX[:state])}" if Array(ax.get_single(AX[:city])).any? && Array(ax.get_single(AX[:state])).any?),
-          'nickname' => ax.get_single(AX[:nickname]),
-          'urls' => ({'Website' => Array(ax.get_single(AX[:website])).first} if Array(ax.get_single(AX[:website])).any?)
-        }.inject({}){|h,(k,v)| h[k] = Array(v).first; h}.reject{|k,v| v.nil? || v == ''}
+        
+        data = {}
+        return data unless ax
+        
+        _add_data data, 'email', ax.get_single(AX[:email])
+        _add_data data, 'first_name', ax.get_single(AX[:first_name])
+        _add_data data, 'last_name', ax.get_single(AX[:last_name])
+        _add_data data, 'name', (ax.get_single(AX[:name]) || [ax.get_single(AX[:first_name]), ax.get_single(AX[:last_name])].join(' ')).strip
+        _add_data data, 'location', ("#{ax.get_single(AX[:city])}, #{ax.get_single(AX[:state])}" if Array(ax.get_single(AX[:city])).any? && Array(ax.get_single(AX[:state])).any?)
+        _add_data data, 'nickname', ax.get_single(AX[:nickname])
+        _add_data data, 'urls', ({'Website' => Array(ax.get_single(AX[:website])).first} if Array(ax.get_single(AX[:website])).any?)
+        
+        data
       end
     end
   end
