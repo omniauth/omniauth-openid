@@ -25,20 +25,24 @@ module OmniAuth
       option :required, [AX[:email], AX[:name], AX[:first_name], AX[:last_name], 'email', 'fullname']
       option :optional, [AX[:nickname], AX[:city], AX[:state], AX[:website], AX[:image], 'postcode', 'nickname']
       option :immediate, false
-      option :trust_root, nil
+      option :trust_root, proc{|root_uri| nil }
       option :store, ::OpenID::Store::Memory.new
       option :identifier, nil
       option :identifier_param, 'openid_url'
 
       def dummy_app
-        lambda{|env| [401, {"WWW-Authenticate" => Rack::OpenID.build_header(
+        lambda{|env|
+          req = Rack::Request.new(env)
+          root_uri = "#{req.scheme}://#{req.host_with_port}/"
+
+          [401, {"WWW-Authenticate" => Rack::OpenID.build_header(
           :identifier => identifier,
           :return_to => callback_url,
           :required => options.required,
           :optional => options.optional,
           :method => 'post',
           :immediate => options.immediate,
-          :trust_root => options.trust_root
+          :trust_root => options.trust_root.call(root_uri)
         )}, []]}
       end
 
