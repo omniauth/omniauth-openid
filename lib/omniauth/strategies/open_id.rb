@@ -27,6 +27,7 @@ module OmniAuth
       option :store, ::OpenID::Store::Memory.new
       option :identifier, nil
       option :identifier_param, 'openid_url'
+      option :login_entrypoint
 
       def dummy_app
         lambda{|env| [401, {"WWW-Authenticate" => Rack::OpenID.build_header(
@@ -43,7 +44,7 @@ module OmniAuth
         i = nil if i == ''
         i
       end
-      
+
       def request_phase
         identifier ? start : get_identifier
       end
@@ -59,11 +60,19 @@ module OmniAuth
         end
       end
 
-      def get_identifier
+      def openid_form
         f = OmniAuth::Form.new(:title => 'OpenID Authentication')
         f.label_field('OpenID Identifier', options.identifier_param)
         f.input_field('url', options.identifier_param)
         f.to_response
+      end
+
+      def get_identifier
+        if options[:login_entrypoint].respond_to?(:call)
+          instance_eval &options[:login_entrypoint]
+        else
+          openid_form
+        end
       end
 
       uid { openid_response.display_identifier }
