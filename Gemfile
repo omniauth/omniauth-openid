@@ -12,7 +12,7 @@ group :development, :test do
   gem 'guard'
   gem 'guard-rspec'
   gem 'growl'
-  gem 'rb-fsevent'
+  gem 'rb-fsevent', '~> 0.9'
 end
 
 group :example do
