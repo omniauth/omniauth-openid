@@ -22,15 +22,15 @@ describe OmniAuth::Strategies::OpenID, :type => :strategy do
     end
 
     it 'should respond with OK' do
-      last_response.should be_ok
+      expect(last_response).to be_ok
     end
 
     it 'should respond with HTML' do
-      last_response.content_type.should == 'text/html'
+      expect(last_response.content_type).to eq('text/html')
     end
 
     it 'should render an identifier URL input' do
-      last_response.body.should =~ %r{<input[^>]*openid_url}
+      expect(last_response.body).to match(%r{<input[^>]*openid_url})
     end
   end
 
@@ -80,9 +80,9 @@ describe OmniAuth::Strategies::OpenID, :type => :strategy do
         end
 
         it 'it should redirect to invalid credentials' do
-          pending
-          last_response.should be_redirect
-          last_response.headers['Location'].should =~ %r{invalid_credentials}
+          skip
+          expect(last_response).to be_redirect
+          expect(last_response.headers['Location']).to match(%r{invalid_credentials})
         end
       end
     end
