@@ -27,11 +27,13 @@ module OmniAuth
       option :store, ::OpenID::Store::Memory.new
       option :identifier, nil
       option :identifier_param, 'openid_url'
+      option :trust_root, nil
 
       def dummy_app
         lambda{|env| [401, {"WWW-Authenticate" => Rack::OpenID.build_header(
           :identifier => identifier,
           :return_to => callback_url,
+          :trust_root => options.trust_root || %r{^(https?://[^/]+)}.match(callback_url) {|m| m[1]},
           :required => options.required,
           :optional => options.optional,
           :method => 'post'
