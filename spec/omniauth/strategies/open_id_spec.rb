@@ -6,7 +6,7 @@ describe OmniAuth::Strategies::OpenID, :type => :strategy do
   def app
     strat = OmniAuth::Strategies::OpenID
     Rack::Builder.new {
-      use Rack::Session::Cookie
+      use Rack::Session::Cookie, secret: 'foobar'
       use strat
       run lambda {|env| [404, {'Content-Type' => 'text/plain'}, [nil || env.key?('omniauth.auth').to_s]] }
     }.to_app
@@ -22,55 +22,55 @@ describe OmniAuth::Strategies::OpenID, :type => :strategy do
     end
 
     it 'should respond with OK' do
-      last_response.should be_ok
+      expect(last_response).to be_ok
     end
 
     it 'should respond with HTML' do
-      last_response.content_type.should == 'text/html'
+      expect(last_response.content_type).to eq 'text/html'
     end
 
     it 'should render an identifier URL input' do
-      last_response.body.should =~ %r{<input[^>]*openid_url}
+      expect(last_response.body).to match %r{<input[^>]*openid_url}
     end
   end
 
-  #describe '/auth/open_id with an identifier URL' do
-  #  context 'successful' do
-  #    before do
-  #      @identifier_url = 'http://me.example.org'
-  #      # TODO: change this mock to actually return some sort of OpenID response
-  #      stub_request(:get, @identifier_url)
-  #      get '/auth/open_id?openid_url=' + @identifier_url
-  #    end
-  #  
-  #    it 'should redirect to the OpenID identity URL' do
-  #      last_response.should be_redirect
-  #      last_response.headers['Location'].should =~ %r{^#{@identifier_url}.*}
-  #    end
-  #  
-  #    it 'should tell the OpenID server to return to the callback URL' do
-  #      return_to = CGI.escape(last_request.url + '/callback')
-  #      last_response.headers['Location'].should =~ %r{[\?&]openid.return_to=#{return_to}}
-  #    end
-  #  end 
-  #end
+  # describe '/auth/open_id with an identifier URL' do
+  #   context 'successful' do
+  #     before do
+  #       @identifier_url = 'http://me.example.org'
+  #       # TODO: change this mock to actually return some sort of OpenID response
+  #       stub_request(:get, @identifier_url)
+  #       get '/auth/open_id?openid_url=' + @identifier_url
+  #     end
+  #
+  #     it 'should redirect to the OpenID identity URL' do
+  #       last_response.should be_redirect
+  #       last_response.headers['Location'].should =~ %r{^#{@identifier_url}.*}
+  #     end
+  #
+  #     it 'should tell the OpenID server to return to the callback URL' do
+  #       return_to = CGI.escape(last_request.url + '/callback')
+  #       last_response.headers['Location'].should =~ %r{[\?&]openid.return_to=#{return_to}}
+  #     end
+  #   end
+  # end
 
   describe 'followed by /auth/open_id/callback' do
     context 'successful' do
-      #before do
-      #  @identifier_url = 'http://me.example.org'
-      #  # TODO: change this mock to actually return some sort of OpenID response
-      #  stub_request(:get, @identifier_url)
-      #  get '/auth/open_id/callback'
-      #end
+      # before do
+      #   @identifier_url = 'http://me.example.org'
+      #   # TODO: change this mock to actually return some sort of OpenID response
+      #   stub_request(:get, @identifier_url)
+      #   get '/auth/open_id/callback'
+      # end
 
       it "should set provider to open_id"
       it "should create auth_hash based on sreg"
       it "should create auth_hash based on ax"
 
-      #it 'should call through to the master app' do
-      #  last_response.body.should == 'true'
-      #end
+      # it 'should call through to the master app' do
+      #   last_response.body.should == 'true'
+      # end
     end
 
     context 'unsuccessful' do
@@ -81,11 +81,10 @@ describe OmniAuth::Strategies::OpenID, :type => :strategy do
 
         it 'it should redirect to invalid credentials' do
           pending
-          last_response.should be_redirect
-          last_response.headers['Location'].should =~ %r{invalid_credentials}
+          expect(last_response).to be_redirect
+          expect(last_response).to match %r{invalid_credentials}
         end
       end
     end
   end
-
 end
