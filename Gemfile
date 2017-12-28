@@ -12,7 +12,6 @@ gemspec
 
 group :development, :test do
   gem 'rack-test'
-  gem 'rdiscount'
   gem 'rspec', '>= 3.0'
   gem 'simplecov', '>= 0.9'
   gem 'webmock', '~> 3.0'
