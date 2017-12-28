@@ -9,7 +9,6 @@ env:
 language: ruby
 rvm:
   - jruby-9000
-  - 2.1.10 # EOL Soon
   - 2.2.9
   - 2.3.6
   - 2.4.3
