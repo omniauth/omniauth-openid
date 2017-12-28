@@ -114,7 +114,7 @@ DEPENDENCIES
   jruby-openssl (~> 0.9)
   omniauth-openid!
   rack-test (~> 0.8)
-  rake (~> 12.3)
+  rake (~> 12.0)
   rb-fsevent
   rdiscount (~> 2.2)
   rspec (~> 3.0)
