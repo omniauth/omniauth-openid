@@ -11,9 +11,12 @@ gem 'ruby-openid', '2.1.8', :git => 'git://github.com/mbleigh/ruby-openid.git'
 gemspec
 
 group :development, :test do
-  gem 'guard'
-  gem 'guard-rspec'
-  gem 'rb-fsevent'
+  gem 'rack-test'
+  gem 'rdiscount'
+  gem 'rspec', '>= 3.0'
+  gem 'simplecov', '>= 0.9'
+  gem 'webmock', '~> 3.0'
+  gem 'yard', '>= 0.9.11'
 end
 
 group :example do

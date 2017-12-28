@@ -2,16 +2,8 @@
 require File.expand_path('../lib/omniauth-openid/version', __FILE__)
 
 Gem::Specification.new do |gem|
-
   gem.add_dependency 'omniauth', '~> 1.0'
   gem.add_dependency 'rack-openid', '~> 1.4.0'
-  gem.add_development_dependency 'rack-test', '~> 0.8'
-  gem.add_development_dependency 'rake', '~> 12.3'
-  gem.add_development_dependency 'rdiscount', '~> 2.2'
-  gem.add_development_dependency 'rspec', '~> 3.0'
-  gem.add_development_dependency 'simplecov', '~> 0.15'
-  gem.add_development_dependency 'webmock', '~> 3.1'
-  gem.add_development_dependency 'yard', '~> 0.9.11'
 
   gem.authors = ['Michael Bleigh', 'Erik Michaels-Ober', 'Tom Milewski']
   gem.description = %q{OpenID strategy for OmniAuth.}
