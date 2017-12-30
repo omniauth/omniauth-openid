@@ -12,6 +12,7 @@ Gem::Specification.new do |gem|
   gem.homepage = 'https://github.com/intridea/omniauth-openid'
   gem.name = 'omniauth-openid'
   gem.require_paths = ['lib']
+  gem.license = 'MIT'
   gem.required_rubygems_version = Gem::Requirement.new('>= 1.3.6') if gem.respond_to? :required_rubygems_version=
   gem.summary = gem.description
   gem.test_files = `git ls-files -- {test,spec,features}/*`.split("\n")
