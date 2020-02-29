@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rake', '~> 12.0'
+gem 'rake', '~> 13.0'
 
 platforms :jruby do
   gem 'jruby-openssl', '~> 0.9'

@@ -36,7 +36,7 @@ GEM
       rack
     rack-test (0.8.2)
       rack (>= 1.0, < 3)
-    rake (12.3.0)
+    rake (13.0.1)
     rspec (3.7.0)
       rspec-core (~> 3.7.0)
       rspec-expectations (~> 3.7.0)
@@ -75,7 +75,7 @@ DEPENDENCIES
   jruby-openssl (~> 0.9)
   omniauth-openid!
   rack-test
-  rake (~> 12.0)
+  rake (~> 13.0)
   rspec (>= 3.0)
   ruby-openid (= 2.1.8)!
   simplecov (>= 0.9)
