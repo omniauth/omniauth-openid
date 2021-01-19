@@ -8,11 +8,11 @@ env:
     - JRUBY_OPTS="$JRUBY_OPTS --debug"
 language: ruby
 rvm:
-  - jruby-9000
-  - 2.2.9
-  - 2.3.6
-  - 2.4.3
-  - 2.5.0
+  - jruby-9.2.14.0
+  - 2.4.10
+  - 2.5.8
+  - 2.6.6
+  - 2.7.2
   - jruby-head
   - ruby-head
 matrix:

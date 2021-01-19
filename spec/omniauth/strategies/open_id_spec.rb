@@ -18,7 +18,7 @@ describe OmniAuth::Strategies::OpenID, :type => :strategy do
 
   describe '/auth/open_id without an identifier URL' do
     before do
-      get '/auth/open_id'
+      post '/auth/open_id'
     end
 
     it 'should respond with OK' do
