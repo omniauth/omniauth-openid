@@ -22,7 +22,7 @@ GEM
     docile (1.1.5)
     hashdiff (0.3.7)
     hashie (4.1.0)
-    json (2.1.0)
+    json (2.5.1)
     mustermann (1.0.1)
     omniauth (2.0.1)
       hashie (>= 3.4.6)
