@@ -38,7 +38,7 @@ GEM
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
     rake (12.3.3)
-    rexml (3.2.4)
+    rexml (3.2.5)
     rspec (3.10.0)
       rspec-core (~> 3.10.0)
       rspec-expectations (~> 3.10.0)
