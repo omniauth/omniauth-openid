@@ -5,16 +5,16 @@ message: >-
   then you can use the metadata from this file.
 type: software
 authors:
-  - given-names: Joel Parker
-    family-names: Henderson
-    email: joel@joelparkerhenderson.com
-    affiliation: joelparkerhenderson.com
-    orcid: 'https://orcid.org/0009-0000-4681-282X'
+  - given-names: Peter Hurn
+    family-names: Boling
+    email: peter@railsbling.com
+    affiliation: railsbling.com
+    orcid: 'https://orcid.org/0009-0008-8519-441X'
 identifiers:
   - type: url
-    value: 'https://github.com/SixArm/omniauth-openid/'
+    value: 'https://github.com/omniauth/omniauth-openid/'
     description: OmniAuth::OpenID
-repository-code: 'https://github.com/SixArm/omniauth-openid/'
+repository-code: 'https://github.com/omniauth/omniauth-openid/'
 abstract: >-
   OmniAuth::OpenID
 license: See license file
