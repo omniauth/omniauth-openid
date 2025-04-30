@@ -1,6 +1,6 @@
 # OmniAuth::OpenID 
 
-Provides strategies for authenticating to providers using the OpenID standard. 
+Provides strategies for authenticating to providers using the OpenID v2 standard, which is deprecated, and very old. It is *not* for the modern OpenID Connect standard.  If you want OpenID Connect then you want: [omniauth/omniauth_openid_connect](https://github.com/omniauth/omniauth_openid_connect)
 
 ## Installation
 
