@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.
 ### Deprecated
 ### Removed
 ### Fixed
+
+- Restored `docs/CNAME` so the generated documentation site keeps its custom domain.
 ### Security
 
 ## [2.0.2] - 2025-06-08
