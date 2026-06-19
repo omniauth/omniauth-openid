@@ -1,0 +1,8 @@
+module OmniAuth
+  module OpenID
+    module Version
+      VERSION: String
+    end
+    VERSION: String
+  end
+end

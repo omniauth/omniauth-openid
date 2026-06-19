@@ -30,6 +30,15 @@ spec_root_matcher = %r{#{__dir__}/(.+)\.rb\Z}
 Dir.glob(Pathname.new(__dir__).join("support/**/", "*.rb")).each { |f| require f.match(spec_root_matcher)[1] }
 
 RSpec.configure do |config|
+  # Enable flags like --only-failures and --next-failure
+  config.example_status_persistence_file_path = ".rspec_status"
+
+  # Disable RSpec exposing methods globally on `Module` and `main`
+  config.disable_monkey_patching!
+
+  config.expect_with :rspec do |c|
+    c.syntax = :expect
+  end
   config.include WebMock::API
   config.include Rack::Test::Methods
 end
@@ -40,7 +49,6 @@ end
 
 # The last thing before loading this gem is to set up code coverage
 begin
-  # This does not require "simplecov", but
   require "kettle-soup-cover"
   #   this next line has a side effect of running `.simplecov`
   require "simplecov" if defined?(Kettle::Soup::Cover) && Kettle::Soup::Cover::DO_COV
@@ -48,6 +56,9 @@ rescue LoadError => error
   # check the error message and conditionally re-raise
   raise error unless error.message.include?("kettle")
 end
+
+# External RSpec & related config
+require "kettle/test/rspec"
 
 # This gem
 require "omniauth-openid"
