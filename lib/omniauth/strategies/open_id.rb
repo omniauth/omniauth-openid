@@ -18,14 +18,14 @@ module OmniAuth
         city: "http://axschema.org/contact/city/home",
         state: "http://axschema.org/contact/state/home",
         website: "http://axschema.org/contact/web/default",
-        image: "http://axschema.org/media/image/aspect11",
+        image: "http://axschema.org/media/image/aspect11"
       }
 
       option :name, :open_id
       option :required, [AX[:email], AX[:name], AX[:first_name], AX[:last_name], "email", "fullname"]
       option :optional, [AX[:nickname], AX[:city], AX[:state], AX[:website], AX[:image], "postcode", "nickname"]
       option :immediate, false
-      option :trust_root, proc { |root_uri| nil }
+      option :trust_root, proc { |root_uri| }
       option :store, ::OpenID::Store::Memory.new
       option :identifier, nil
       option :identifier_param, "openid_url"
@@ -55,10 +55,10 @@ module OmniAuth
                 required: options.required,
                 optional: options.optional,
                 method: "post",
-                immediate: options.immediate,
-              ),
+                immediate: options.immediate
+              )
             },
-            [],
+            []
           ]
         }
       end
@@ -122,7 +122,7 @@ module OmniAuth
           "email" => sreg["email"],
           "name" => sreg["fullname"],
           "location" => sreg["postcode"],
-          "nickname" => sreg["nickname"],
+          "nickname" => sreg["nickname"]
         }.reject { |k, v| v.nil? || v == "" }
       end
 
@@ -136,7 +136,7 @@ module OmniAuth
           "name" => (ax.get_single(AX[:name]) || [ax.get_single(AX[:first_name]), ax.get_single(AX[:last_name])].join(" ")).strip,
           "location" => ("#{ax.get_single(AX[:city])}, #{ax.get_single(AX[:state])}" if Array(ax.get_single(AX[:city])).any? && Array(ax.get_single(AX[:state])).any?),
           "nickname" => ax.get_single(AX[:nickname]),
-          "urls" => ({"Website" => Array(ax.get_single(AX[:website])).first} if Array(ax.get_single(AX[:website])).any?),
+          "urls" => ({"Website" => Array(ax.get_single(AX[:website])).first} if Array(ax.get_single(AX[:website])).any?)
         }.each_with_object({}) { |(k, v), h|
           h[k] = Array(v).first
         }.reject { |k, v| v.nil? || v == "" }

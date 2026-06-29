@@ -5,6 +5,7 @@ inherit_from:
 plugins:
   - rubocop-on-rbs
   - rubocop-packaging
+  - rubocop-rspec
 # This tells RuboCop to add the exclusions in this file
 # to the default exclusions (and those from other inherited files),
 # rather than overwriting them.

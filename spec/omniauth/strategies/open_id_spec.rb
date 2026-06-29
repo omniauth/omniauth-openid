@@ -4,7 +4,7 @@ RSpec.describe OmniAuth::Strategies::OpenID, type: :strategy do
     Rack::Builder.new {
       use Rack::Session::Cookie, secret: SecureRandom.hex(64)
       use strat
-      run lambda { |env| [404, {"Content-Type" => "text/plain"}, [nil || env.key?("omniauth.auth").to_s]] }
+      run lambda { |env| [404, {"Content-Type" => "text/plain"}, [env.key?("omniauth.auth").to_s]] }
     }.to_app
   end
 
@@ -74,7 +74,7 @@ RSpec.describe OmniAuth::Strategies::OpenID, type: :strategy do
         it "redirects to invalid credentials" do
           pending
           expect(last_response).to be_redirect
-          expect(last_response).to match %r{invalid_credentials}
+          expect(last_response).to include("invalid_credentials")
         end
       end
     end
