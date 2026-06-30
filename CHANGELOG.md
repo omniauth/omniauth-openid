@@ -35,6 +35,8 @@ Please file a bug if you notice a violation of semantic versioning.
 
 - Restored `docs/CNAME` so the generated documentation site keeps its custom domain.
 
+- Package configured license files in gem release file lists.
+
 ### Security
 
 ## [2.0.2] - 2025-06-08
