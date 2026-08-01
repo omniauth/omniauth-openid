@@ -21,6 +21,14 @@ I've summarized my thoughts in [this blog post](https://dev.to/galtzo/hostile-ta
 
 ## 🌻 Synopsis <a href="https://discord.gg/3qme4XHNKN"><img alt="Galtzo FLOSS Logo by Aboling0, CC BY-SA 4.0" src="https://logos.galtzo.com/assets/images/galtzo-floss/avatar-128px.svg" width="8%" align="right"/></a> <a href="https://ruby-toolbox.com"><img alt="ruby-lang Logo, Yukihiro Matsumoto, Ruby Visual Identity Team, CC BY-SA 2.5" src="https://logos.galtzo.com/assets/images/ruby-lang/avatar-128px.svg" width="8%" align="right"/></a>
 
+omniauth-openid is the legacy OpenID strategy for OmniAuth. It delegates
+discovery, redirects, and response verification to `rack-openid` and
+`ruby-openid`, then exposes the verified identifier as the OmniAuth UID and
+maps SReg and Attribute Exchange values into the auth hash.
+
+This is OpenID 1.x/2.0 support, not OpenID Connect (OIDC). Use it when an
+application still needs to authenticate against an OpenID 2.0 provider.
+
 ## 💡 Info you can shake a stick at
 
 | Tokens to Remember | [![Gem name][⛳️name-img]][⛳️gem-name] [![Gem namespace][⛳️namespace-img]][⛳️gem-namespace] |
@@ -118,6 +126,23 @@ gem install omniauth-openid
 ```
 
 ## ⚙️ Configuration
+
+Configure the strategy through `OmniAuth::Builder`, as shown below. A durable
+`OpenID::Store` is important in a real deployment: the default memory store is
+appropriate only for a single process and loses associations and nonce state
+when the process restarts. `OpenID::Store::Filesystem` is suitable for a single
+host; use a shared store implementation for a multi-process or multi-host app.
+
+The strategy accepts these primary options:
+
+| Option | Purpose |
+| --- | --- |
+| `store` | OpenID association and nonce store. |
+| `identifier` | Fixed provider or identity URL; omit it to ask the user. |
+| `identifier_param` | Request parameter used for a user-supplied identifier; defaults to `openid_url`. |
+| `required` / `optional` | SReg or AX attributes requested from the provider. |
+| `immediate` | Request an immediate response instead of allowing provider interaction. |
+| `trust_root` | Explicit relying-party realm, or a callable that derives one. |
 
 ## 🔧 Basic Usage
 
