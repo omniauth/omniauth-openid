@@ -1,6 +1,6 @@
 {
-  "spec/omniauth/openid/version_spec.rb:4012809883": [
-    [12, 58, 25, "RSpec/DescribedClass: Use `described_class` instead of `OmniAuth::OpenID::Version`.", 3486261707]
+  "spec/omniauth/openid/version_spec.rb:2536590855": [
+    [13, 58, 25, "RSpec/DescribedClass: Use `described_class` instead of `OmniAuth::OpenID::Version`.", 3486261707]
   ],
   "spec/omniauth/strategies/open_id_spec.rb:3383874172": [
     [1, 1, 60, "RSpec/SpecFilePathFormat: Spec path should end with `omni_auth/strategies/open_id*_spec.rb`.", 3122388919],

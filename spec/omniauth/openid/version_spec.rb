@@ -1,6 +1,7 @@
 # rubocop:disable RSpec/SpecFilePathFormat
 
 require "anonymous_loader"
+require "omniauth/openid"
 RSpec.describe OmniAuth::OpenID::Version do
   it_behaves_like "a Version module", described_class
 
