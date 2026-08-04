@@ -104,6 +104,8 @@ Please file a bug if you notice a violation of semantic versioning.
 - kettle-jem-template-20260802-001 - Devcontainer JSON files now merge as JSONC,
   preserving comments and trailing commas during template updates.
 
+- Restore the OmniAuth OpenID version module in its parent namespace.
+
 ### Security
 
 ## [2.0.2] - 2025-06-08
