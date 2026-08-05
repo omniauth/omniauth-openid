@@ -2,7 +2,7 @@
 version: 1
 template_state:
   version: 7.1.0
-  applied_at: '2026-08-04'
+  applied_at: '2026-08-05'
   changelog_replay:
     last_entry_key: kettle-jem-template-20260802-001
     last_entry_date: '2026-08-02'
@@ -1098,7 +1098,7 @@ files:
     recipe: template_source_application_lib_omniauth_openid_version_rb
     action: write
     dest_sha256: 9ec8227c2a1a29369ed767c2f6061584530c45bd3fde3c7eed9218974c701dc7
-    input_fingerprint: 469d040e9586ba6bb7dec8e5972293bd10b663b79816577ea2ff7940cb8deb9c
+    input_fingerprint: a76a8d382b506521ad74cbc8aabcd8e12bf31501f7d87eabbccda1d71159081c
     template_sources:
     - lib/gem/version.rb.example
   mise.toml:
@@ -1112,7 +1112,7 @@ files:
     recipe: template_source_application_omniauth_openid_gemspec
     action: write
     dest_sha256: d407db88bc7e99a0e56edae9100398e91ef3040bd1756d4af6561ce9d36b5bb6
-    input_fingerprint: 60dc73611f3624411f635bf6c87d683aa362fdf15f12ff5c62f6912364a68867
+    input_fingerprint: d4dfe530a7e584233cb785d26221347f26d57b8f6814ff7d83266a58f1359293
     template_sources:
     - gem.gemspec.example
   parsers.toml:
