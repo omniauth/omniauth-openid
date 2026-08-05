@@ -106,6 +106,8 @@ Please file a bug if you notice a violation of semantic versioning.
 
 - Restore the OmniAuth OpenID version module in its parent namespace.
 
+- Restore the public OmniAuth::OpenID::Version inclusion API.
+
 ### Security
 
 ## [2.0.2] - 2025-06-08

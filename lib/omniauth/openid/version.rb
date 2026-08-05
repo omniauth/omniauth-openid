@@ -9,5 +9,6 @@ module OmniAuth
     end
     # Current gem version exposed at the traditional constant location.
     VERSION = Version::VERSION # Traditional Constant Location
+    include Version
   end
 end
